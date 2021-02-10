@@ -24,7 +24,7 @@ public class CustomerClass {
 
     @Override
     public String toString() {
-        return "bankAppExercise.CustomerClass{" +
+        return "CustomerClass{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", DOB=" + DOB +

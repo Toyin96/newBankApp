@@ -14,6 +14,7 @@ public class Bank {
     private double withdrawalAmount;
     private Date date;
     private long debitCard;
+    private int customerCounter = 0;
     private int transactionHistory = 0;
 
     public void createAccount(String firstName, String lastName, int day, int month, int year, String address, String accountType) {
@@ -21,7 +22,8 @@ public class Bank {
         this.date = date;
         createAccountNumber();
         createBvnNumber();
-        this.customer = new CustomerClass(firstName,lastName,date, address, "Savings");
+        this.customer = new CustomerClass(firstName,lastName,date, address, accountType);
+        customerCounter++;
     }
 
     SecureRandom random = new SecureRandom();
@@ -69,25 +71,27 @@ public class Bank {
     return BVN;
     }
 
-    public void depositMoney(double depositAmount) {
+    public boolean depositMoney(double depositAmount) {
 
         if (depositAmount < 0){
             throw new IllegalArgumentException("You entered an invalid amount");
         }
         accountBalance += depositAmount;
         transactionHistory++;
+        return true;
     }
 
     public double getAccountBalance() {
         return accountBalance;
     }
 
-    public void withdrawMoney(double withdrawalAmount) {
+    public boolean withdrawMoney(double withdrawalAmount) {
         if (withdrawalAmount > accountBalance) {
             throw new IllegalArgumentException("You cannot withdraw an amount higher than your account balance");
         }
         accountBalance -= withdrawalAmount;
         transactionHistory++;
+        return true;
     }
 
     public boolean applyForLoan(double accountBalance, double loanAmount) {
@@ -97,5 +101,9 @@ public class Bank {
             return true;
         }
         return false;
+    }
+
+    public int fetchListOfCustomers() {
+        return customerCounter;
     }
 }
