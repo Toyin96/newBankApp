@@ -9,6 +9,14 @@ public class Account {
     StringBuilder stringBuilder = new StringBuilder();
     SecureRandom random;
 
+    public Account(double accountBalance) {
+        this.accountID = generateAccountID();
+        this.accountBalance = accountBalance;
+    }
+
+    public Account() {
+    }
+
     public String generateAccountID() {
         String prefix = "OVT";
         accountID = stringBuilder.append(prefix).toString();
@@ -22,25 +30,19 @@ public class Account {
         return accountID;
     }
 
-    public void setAccountBalance(int amount) {
-        if (amount <= 0){
-            throw new IllegalArgumentException("deposit amount cannot be less than $0");
-        }
-        this.accountBalance = amount;
-    }
-
     public double getAccountBalance() {
+
         return accountBalance;
     }
 
-    public void depositFunds(int amount) {
-        if (amount < 0){
+    public void depositFunds(double amount) {
+        if (amount <= 0){
             throw new IllegalArgumentException("Amount value cannot be less than $0");
         }
-        this.accountBalance += amount;
+       accountBalance += amount;
     }
 
-    public void withdrawFunds(int amount) {
+    public void withdrawFunds(double amount) {
 
         if (amount > accountBalance){
             throw new IllegalArgumentException("Withdrawal amount cannot be greater than account balance");
@@ -50,11 +52,18 @@ public class Account {
             throw new IllegalArgumentException("Withdrawal amount cannot be less than $1");
         }
 
-        this.accountBalance -= amount;
+        if (accountBalance < 1){
+            throw new IllegalArgumentException("Insufficient funds! Deposit money first into your account before you can perform this operation.");
+        }
+        accountBalance -= amount;
     }
 
-    public void closeAccount(String accountID) {
-
+    @Override
+    public String toString() {
+        return String.format("AccountID: " + accountID + "\n" + "BALANCE: " + accountBalance);
     }
 
+    public String getAccountID() {
+        return accountID;
+    }
 }

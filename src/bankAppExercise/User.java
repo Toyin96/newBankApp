@@ -77,7 +77,8 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("NAME: " + firstName + "" + lastName + "\n"
+        return String.format("NAME: " + firstName + " " +
+                "" + lastName + "\n"
                + "ADDRESS: " + address + "\n" + "PHONE NUMBER: " + phoneNumber + "\n" + "DATE OF BIRTH: %d/%d/%d", day,month,year
         );
     }

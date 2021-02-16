@@ -11,12 +11,14 @@ class UserTest {
     User user;
     Customer customer;
     Account account;
+    Bank bank;
 
     @BeforeEach
     void setUp() {
         user = new User();
         customer = new Customer();
         account = new Account();
+        bank = new Bank();
     }
 
     @AfterEach
@@ -58,12 +60,7 @@ class UserTest {
         String accountID = account.generateAccountID();
         assertTrue(accountID.startsWith("OVT"));
         assertEquals(10,accountID.length());
-    }
-
-    @Test
-    void account_canHaveAccountBalance(){
-        account.setAccountBalance(11000);
-        assertEquals(11000, account.getAccountBalance());
+        assertEquals(accountID, account.getAccountID());
     }
 
     @Test
@@ -77,7 +74,7 @@ class UserTest {
         account.depositFunds(15000);
         boolean thrown = false;
         try {
-            account.withdrawFunds(15001);
+            account.withdrawFunds(15001.00);
         }catch(IllegalArgumentException e){
             thrown = true;
             System.out.println(e.getMessage());
@@ -87,15 +84,29 @@ class UserTest {
     }
 
     @Test
-    void account_canBeDeletedByCustomer(){
-        account.closeAccount("OVT173208475");
-
+    void customer_canBeAssignedANewAccountUponCreation(){
+        Customer customer1 = new Customer("toyin", "onagoruwa", "42, Aderupoko street, iwaya - yaba", "09096687275", 13, 3, 1996, 123.2);
+        System.out.println(customer1);
+        assertNotNull(customer1);
     }
 
     @Test
-    void customer_canBeAssignedANewAccountUponCreation(){
-        customer.getAccount();
-        System.out.println(customer.getAccount());
-//        assertEquals();
+    void bank_canStoreCustomerInformation(){
+        Customer customerKunle = new Customer("Kunle", "Sandton", "12, Orunmila street, yaba","07038253061", 29, 12, 1980, 260.2);
+        assertTrue(bank.addCustomer(customerKunle));
+        System.out.println(bank);
     }
+
+    @Test
+    void customerAccountCanBeFetched(){
+        Customer customerToyin = new Customer("toyin", "onagoruwa", "42, Aderupoko street, iwaya - yaba","09096687275", 13, 3, 1996, 123.2);
+        Customer customerKunle = new Customer("Kunle", "Sandton", "12, Orunmila street, yaba","07038253061", 29, 12, 1980, 260.2);
+        String kunleAcct = customerKunle.fetchAccountNumber(customerKunle);
+        String toyinacct = customerToyin.fetchAccountNumber(customerToyin);
+        System.out.println(kunleAcct);
+        System.out.println(toyinacct);
+        assertNotEquals(kunleAcct, toyinacct);
+    }
+
+
 }

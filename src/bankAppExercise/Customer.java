@@ -3,18 +3,24 @@ package bankAppExercise;
 public class Customer extends User{
 
     private Account account;
-    private User customer;
 
-    public Customer(String firstName, String lastName, String address, String phoneNumber, int day, int month, int year, Account account, User customer) {
+    public Customer(String firstName, String lastName, String address, String phoneNumber, int day, int month, int year, double openingBalance) {
         super(firstName, lastName, address, phoneNumber, day, month, year);
-        this.account = account;
-        this.customer = customer;
+        this.account = new Account(openingBalance);
+        //        Bank bank = new Bank();
+
+
     }
 
     public Customer(){
     }
+    
+    @Override
+    public String toString() {
+        return String.format("CUSTOMER PROFILE\n" + super.toString() + "\n" + account);
+    }
 
-    public Account getAccount() {
-        return account;
+    public String fetchAccountNumber(Customer customerName) {
+       return customerName.account.getAccountID();
     }
 }
